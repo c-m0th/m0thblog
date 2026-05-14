@@ -1,0 +1,86 @@
+# ============================================================
+# config/sources.yaml — 你的订阅源配置
+# 复制为 sources.yaml 后按需编辑
+# ============================================================
+
+settings:
+  max_items_per_source: 5          # 每个来源最多处理几条
+  max_content_chars: 12000         # 送入 Claude 的最大字符数
+  days_lookback: 1                 # 只看最近几天的内容（0=今天）
+  language_hint: "中文或英文均可"   # 提示 Claude 输出语言
+  blog_publish_enabled: true       # 正常运行时自动写入 ../src/content/papers
+  blog_daily_digest_tag: "每日摘要"
+
+# ─────────────────────────────────────────
+# YouTube 频道（填 channel_id 或 handle）
+# ─────────────────────────────────────────
+youtube:
+  - name: "Andrej Karpathy"
+    channel_id: "UCXUPKJO5MZQMU11oa6u6KbA"
+  - name: "Yannic Kilcher"
+    channel_id: "UCZHmQk67mSJgfCCTn7xBfew"
+  - name: "Two Minute Papers"
+    channel_id: "UCbfYPyITQ-7l4upoX8nvctg"
+  - name: "3Blue1Brown"
+    channel_id: "UCYO_jab_esuFRV4b17AJtAg"
+  - name: "StatQuest with Josh Starmer"
+    channel_id: "UCtYLUTtgS3k1Fg4y5tAhLbw"
+
+# ─────────────────────────────────────────
+# RSS 源（Substack / Medium / 博客）
+# ─────────────────────────────────────────
+rss_blogs:
+  - name: "The Batch (DeepLearning.AI)"
+    url: "https://www.deeplearning.ai/the-batch/feed/"
+  - name: "Lilian Weng's Blog"
+    url: "https://lilianweng.github.io/index.xml"
+  - name: "Ahead of AI (Sebastian Raschka)"
+    url: "https://magazine.sebastianraschka.com/feed"
+  - name: "Newsletter by Chip Huyen"
+    url: "https://huyenchip.substack.com/feed"
+  - name: "Eugene Yan"
+    url: "https://eugeneyan.com/rss/"
+
+# ─────────────────────────────────────────
+# ArXiv 关键词/分类订阅
+# ─────────────────────────────────────────
+arxiv:
+  - name: "LLM Papers"
+    query: "cat:cs.LG+AND+ti:large+language+model"
+    max_results: 5
+  - name: "Diffusion Models"
+    query: "cat:cs.CV+AND+ti:diffusion"
+    max_results: 3
+  - name: "Reinforcement Learning"
+    query: "cat:cs.LG+AND+ti:reinforcement+learning"
+    max_results: 3
+
+# ─────────────────────────────────────────
+# 播客 RSS（只抓最新一集）
+# ─────────────────────────────────────────
+podcasts:
+  - name: "Lex Fridman Podcast"
+    url: "https://lexfridman.com/feed/podcast/"
+    transcribe: false              # true 用 Whisper，需要更多计算
+  - name: "The TWIML AI Podcast"
+    url: "https://twimlai.com/feed"
+    transcribe: false
+  - name: "Machine Learning Street Talk"
+    url: "https://feeds.buzzsprout.com/1511458.rss"
+    transcribe: false
+
+# ─────────────────────────────────────────
+# Hacker News（抓 AI/ML 相关热帖）
+# ─────────────────────────────────────────
+hackernews:
+  enabled: true
+  keywords:                        # 标题包含这些词才纳入
+    - "LLM"
+    - "machine learning"
+    - "deep learning"
+    - "AI"
+    - "neural"
+    - "GPT"
+    - "transformer"
+  min_score: 100                   # 最低分数门槛
+  max_items: 5

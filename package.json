@@ -1,0 +1,24 @@
+{
+  "name": "knowledge-blog",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build && pagefind --site dist",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "cms": "decap-server",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "latest",
+    "astro": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "cross-env": "latest",
+    "decap-server": "latest",
+    "pagefind": "latest",
+    "typescript": "latest"
+  }
+}

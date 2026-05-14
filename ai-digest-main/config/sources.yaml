@@ -1,0 +1,410 @@
+# ============================================================
+# config/sources.yaml — 订阅源配置
+# 方向：心脑医学信号处理 + 深度学习 + 纯临床心脑疾病 + 中文科研平台
+# 复制为 sources.yaml 后按需注释/删除不需要的条目
+# ============================================================
+
+settings:
+  max_items_per_source: 3          # 每个来源最多处理几条（源多时建议 2-3）
+  max_content_chars: 12000         # 送入 Claude 的最大字符数
+  days_lookback: 1                 # 只看最近几天的内容
+  language_hint: "中文输出，简洁，准确，专业术语保留英文原文"
+
+
+# ═══════════════════════════════════════════════════════════
+# 一、YouTube 频道
+# ═══════════════════════════════════════════════════════════
+
+youtube:
+
+  # ── 心脑信号处理 / 生物医学工程 ──────────────────────────
+
+  - name: "NeuroMatch Academy"              # 计算神经科学课程，含EEG/fMRI建模
+    channel_id: "UC4s3TV2-GWFoFaI5USKWJmA"
+
+  - name: "IBRO Neuroscience"               # 国际脑研究组织讲座
+    channel_id: "UCCjnQjPTvjdoVLgkDZC9i7A"
+
+  - name: "Cardiology Explained"            # 心电图/心律失常临床讲解
+    channel_id: "UCsmbIcMjBAzxFBNPl1jFbzQ"
+
+  - name: "Daily Cardiology"            # 心电图/心律失常临床讲解
+    channel_id: "UC9bIjJIDtLHr0TMgSUpzdcA"
+
+  - name: "Oxford Academic Cardiovascular"  # 牛津心血管期刊视频摘要
+    channel_id: "UCqHiHHUeBoNpVvWNkTkRnXA"
+
+  # ── 深度学习 / AI ────────────────────────────────────────
+
+  - name: "Andrej Karpathy"
+    channel_id: "UCXUPKJO5MZQMU11oa6u6KbA"
+
+  - name: "Yannic Kilcher"                  # 顶会论文精读，含医疗AI
+    channel_id: "UCZHmQk67mSJgfCCTn7xBfew"
+
+  - name: "StatQuest with Josh Starmer"     # 统计+ML，生物医学背景友好
+    channel_id: "UCtYLUTtgS3k1Fg4y5tAhLbw"
+
+  - name: "3Blue1Brown"
+    channel_id: "UCYO_jab_esuFRV4b17AJtAg"
+
+  - name: "Two Minute Papers"
+    channel_id: "UCbfYPyITQ-7l4upoX8nvctg"
+
+
+# ═══════════════════════════════════════════════════════════
+# 二、RSS 博客 / Newsletter
+# ═══════════════════════════════════════════════════════════
+
+rss_blogs:
+
+  # ── 🇨🇳 中文科研资讯平台 ─────────────────────────────────
+  # 注意：部分平台 RSS 路径可能随版本更新变化，若某条为空请检查最新地址
+
+  - name: "科学网-医药健康"
+    url: "http://www.sciencenet.cn/xml/paper.aspx?di=1"
+
+  - name: "Bio-IT World"
+    url: "http://www.bio-itworld.com/RSS/BioIT_WorldNews_RSS.aspx"
+
+  - name: "XMOL 生命科学"
+    url: "https://www.x-mol.com/news/rss?subject=life"
+
+  - name: "XMOL 医学"
+    url: "https://www.x-mol.com/news/rss?subject=medicine"
+
+  - name: "艾思科蓝-医学"
+    url: "https://www.ais.cn/rss/medical.xml"
+
+  - name: "小木虫-生物医学"
+    url: "http://muchong.com/html/rss/rss_forum.xml?fid=109"
+
+  # ── 🌐 国际医学 AI / 生物医学信号 ───────────────────────
+
+  - name: "Nature Machine Intelligence"
+    url: "https://www.nature.com/natmachintell.rss"
+
+  - name: "Signals"
+    url: "https://www.mdpi.com/rss/journal/signals"
+
+  - name: "Papers With Code Latest"
+    url: "https://paperswithcode.com/latest/rss"
+
+  - name: "Computational biology and bioinformatics"
+    url: "https://www.nature.com/subjects/computational-biology-and-bioinformatics.rss"
+
+  # ── 🧠 纯临床神经科学期刊 ────────────────────────────────
+
+  - name: "Brain - Oxford Neurology"        # 牛津《Brain》，顶级神经病学期刊
+    url: "https://academic.oup.com/rss/site_5182/3188.xml"
+
+  - name: "Neurology - AAN"                 # 美国神经病学学会官方期刊
+    url: "https://n.neurology.org/rss/ahead.xml"
+
+  - name: "Lancet Neurology"
+    url: "https://www.thelancet.com/rssfeed/laneur_current.xml"
+
+  - name: "Nature Neuroscience"
+    url: "https://www.nature.com/neuro.rss"
+
+  # ── ❤️ 纯临床心血管期刊 ──────────────────────────────────
+
+  - name: "JACC - Journal of ACC"           # 美国心脏病学会旗舰期刊
+    url: "https://www.jacc.org/rss/current_issue"
+
+  - name: "European Heart Journal"
+    url: "https://academic.oup.com/rss/site_5394/advanceAccess_3507.xml"
+
+  - name: "Heart Rhythm Journal"            # 心律失常专业期刊
+    url: "https://www.heartrhythmjournal.com/rss/articles"
+
+  - name: "Stroke - AHA Journal"
+    url: "https://www.ahajournals.org/action/showFeed?type=etoc&feed=rss&jc=str"
+
+  - name: "AHA Journals - Circulation"
+    url: "https://www.ahajournals.org/action/showFeed?type=etoc&feed=rss&jc=circ"
+
+  # ── 🤖 深度学习 ─────────────────────────────────────────
+
+  - name: "Lilian Weng's Blog"
+    url: "https://lilianweng.github.io/index.xml"
+
+  - name: "Ahead of AI (Sebastian Raschka)"
+    url: "https://magazine.sebastianraschka.com/feed"
+
+  - name: "The Batch (DeepLearning.AI)"
+    url: "https://www.deeplearning.ai/the-batch/feed/"
+
+  - name: "Chip Huyen - AI Engineering"
+    url: "https://huyenchip.substack.com/feed"
+
+
+# ═══════════════════════════════════════════════════════════
+# 三、ArXiv 论文订阅
+#
+# 分类说明：
+#   eess.SP  = 信号处理
+#   eess.IV  = 图像/视频处理（医学影像）
+#   cs.LG    = 机器学习
+#   cs.CV    = 计算机视觉
+#   q-bio.NC = 计算神经科学
+#   q-bio.TO = 组织与器官（含心血管基础）
+# ═══════════════════════════════════════════════════════════
+
+arxiv:
+
+  # ── ❤️ 心脏信号 + AI ──────────────────────────────────────
+
+  - name: "ECG 深度学习"
+    query: "cat:eess.SP+AND+(ti:ECG+OR+ti:electrocardiogram+OR+ti:arrhythmia)"
+    max_results: 4
+
+  - name: "ECG 机器学习"
+    query: "cat:eess.SP+AND+(ti:ECG+OR+ti:electroencephalogram)+AND+ti:machine+learning"
+    max_results: 4
+
+  - name: "心房颤动 / 心律失常检测"
+    query: "cat:cs.LG+AND+(ti:atrial+fibrillation+OR+ti:arrhythmia+detection)"
+    max_results: 3
+
+  - name: "心音信号 PCG"
+    query: "cat:eess.SP+AND+(ti:phonocardiogram+OR+ti:heart+sound+OR+ti:PCG)"
+    max_results: 3
+
+  - name: "心血管疾病 AI 预测"
+    query: "cat:cs.LG+AND+(ti:cardiovascular+OR+ti:cardiac)+AND+ti:deep+learning"
+    max_results: 3
+
+  # ── 🧠 脑信号 + AI ────────────────────────────────────────
+
+  - name: "EEG 深度学习"
+    query: "cat:eess.SP+AND+(ti:EEG+OR+ti:electroencephalogram)+AND+ti:deep+learning"
+    max_results: 4
+
+  - name: "EEG 机器学习"
+    query: "cat:eess.SP+AND+(ti:EEG+OR+ti:electroencephalogram)+AND+ti:machine+learning"
+    max_results: 4
+
+  - name: "脑机接口 BCI"
+    query: "cat:cs.LG+AND+(ti:brain-computer+interface+OR+ti:BCI+OR+ti:motor+imagery)"
+    max_results: 3
+
+  - name: "fMRI / 神经影像"
+    query: "cat:eess.IV+AND+(ti:fMRI+OR+ti:neuroimaging+OR+ti:brain+MRI)"
+    max_results: 3
+
+  - name: "癫痫 AI 检测"
+    query: "cat:cs.LG+AND+(ti:epilepsy+OR+ti:seizure+detection)"
+    max_results: 3
+
+  - name: "睡眠分期"
+    query: "cat:eess.SP+AND+(ti:sleep+staging+OR+ti:sleep+apnea+OR+ti:polysomnography)"
+    max_results: 3
+
+  # ── ❤️ 纯临床心血管（无 AI/ML 约束）─────────────────────
+
+  - name: "冠心病 / 急性心肌梗死"
+    query: "(ti:coronary+artery+disease+OR+ti:myocardial+infarction)+AND+(ti:mechanism+OR+ti:treatment+OR+ti:prognosis)"
+    max_results: 3
+
+  - name: "心力衰竭"
+    query: "ti:heart+failure+AND+(ti:pathophysiology+OR+ti:therapy+OR+ti:biomarker)"
+    max_results: 3
+
+  - name: "高血压机制与治疗"
+    query: "(ti:hypertension+OR+ti:blood+pressure)+AND+(ti:mechanism+OR+ti:treatment)"
+    max_results: 3
+
+  - name: "心脏电生理 / 离子通道"
+    query: "cat:q-bio.NC+AND+(ti:cardiac+electrophysiology+OR+ti:ion+channel+OR+ti:action+potential)"
+    max_results: 3
+
+  - name: "动脉粥样硬化 / 斑块"
+    query: "(ti:atherosclerosis+OR+ti:plaque)+AND+(ti:mechanism+OR+ti:inflammation+OR+ti:imaging)"
+    max_results: 3
+
+  # ── 🧠 纯临床脑疾病（无 AI/ML 约束）─────────────────────
+
+  - name: "阿尔茨海默病"
+    query: "(ti:Alzheimer+OR+ti:dementia)+AND+(ti:biomarker+OR+ti:pathology+OR+ti:treatment)"
+    max_results: 3
+
+  - name: "帕金森病"
+    query: "ti:Parkinson+AND+(ti:mechanism+OR+ti:therapy+OR+ti:dopamine)"
+    max_results: 3
+
+  - name: "脑卒中 / 缺血性损伤"
+    query: "(ti:stroke+OR+ti:cerebral+ischemia+OR+ti:cerebral+infarction)+AND+(ti:mechanism+OR+ti:neuroprotection)"
+    max_results: 3
+
+  - name: "癫痫基础与临床"
+    query: "(ti:epilepsy+OR+ti:seizure)+AND+(ti:mechanism+OR+ti:genetics+OR+ti:treatment)"
+    max_results: 3
+
+  - name: "抑郁症 / 焦虑神经机制"
+    query: "cat:q-bio.NC+AND+(ti:depression+OR+ti:anxiety)+AND+(ti:neural+OR+ti:circuit+OR+ti:neurotransmitter)"
+    max_results: 3
+
+  # ── 🔬 医学信号通用方法 ──────────────────────────────────
+
+  - name: "生物医学信号 Transformer"
+    query: "cat:cs.LG+AND+(ti:biosignal+OR+ti:physiological+signal)+AND+ti:transformer"
+    max_results: 3
+
+  - name: "可穿戴设备 PPG/IMU"
+    query: "cat:eess.SP+AND+(ti:wearable+OR+ti:PPG+OR+ti:IMU)+AND+ti:deep+learning"
+    max_results: 3
+
+  - name: "医学时序基础模型"
+    query: "cat:cs.LG+AND+(ti:foundation+model+OR+ti:pretrained)+AND+(ti:ECG+OR+ti:EEG+OR+ti:biosignal)"
+    max_results: 3
+
+  # ── 🤖 深度学习通用方法 ──────────────────────────────────
+
+  - name: "自监督 / 对比学习"
+    query: "cat:cs.LG+AND+(ti:self-supervised+OR+ti:contrastive+learning)"
+    max_results: 3
+
+  - name: "医学小样本 / 迁移学习"
+    query: "cat:cs.LG+AND+(ti:few-shot+OR+ti:transfer+learning)+AND+ti:medical"
+    max_results: 3
+
+# ── 🔥 热门新架构 ─────────────────────────────────────────
+ 
+  - name: "KAN — Kolmogorov-Arnold Networks"
+    # 2024年爆火的KAN网络，用可学习激活函数替代MLP中固定权重
+    query: "cat:cs.LG+AND+(ti:KAN+OR+ti:Kolmogorov-Arnold)"
+    max_results: 3
+ 
+  - name: "Mamba / 状态空间模型 SSM"
+    # 线性复杂度序列建模，时序生理信号的有力竞争者
+    query: "cat:cs.LG+AND+(ti:Mamba+OR+ti:state+space+model+OR+ti:SSM)+AND+(ti:sequence+OR+ti:time+series+OR+ti:signal)"
+    max_results: 3
+ 
+  - name: "Mamba 医学应用"
+    # Mamba 在医学图像/信号中的应用
+    query: "cat:cs.LG+AND+(ti:Mamba+OR+ti:SSM)+AND+(ti:medical+OR+ti:clinical+OR+ti:biomedical)"
+    max_results: 3
+ 
+  - name: "YOLO 系列目标检测"
+    # YOLOv9/v10/v11 及医学影像目标检测
+    query: "cat:cs.CV+AND+(ti:YOLO+OR+ti:you+only+look+once)"
+    max_results: 3
+ 
+  - name: "YOLO 医学影像检测"
+    # YOLO 在病灶检测、细胞识别等医学场景的应用
+    query: "cat:cs.CV+AND+ti:YOLO+AND+(ti:medical+OR+ti:lesion+OR+ti:detection+OR+ti:segmentation)"
+    max_results: 3
+ 
+  - name: "Vision Transformer / ViT 变体"
+    # ViT、Swin Transformer、DeiT 等视觉Transformer
+    query: "cat:cs.CV+AND+(ti:vision+transformer+OR+ti:ViT+OR+ti:Swin+Transformer)"
+    max_results: 3
+ 
+  - name: "图神经网络 GNN 医学"
+    # GNN 在药物发现、疾病预测、脑网络分析中的应用
+    query: "cat:cs.LG+AND+(ti:graph+neural+network+OR+ti:GNN)+AND+(ti:medical+OR+ti:brain+OR+ti:drug)"
+    max_results: 3
+ 
+  - name: "扩散模型 Diffusion 医学"
+    # Diffusion Model 在医学图像生成/增强/去噪中的应用
+    query: "cat:cs.CV+AND+ti:diffusion+AND+(ti:medical+OR+ti:MRI+OR+ti:CT+OR+ti:ultrasound)"
+    max_results: 3
+ 
+  - name: "大语言模型 LLM 医学"
+    # LLM / ChatGPT / GPT-4 在医学问答、报告生成中的应用
+    query: "cat:cs.CL+AND+(ti:large+language+model+OR+ti:LLM+OR+ti:GPT)+AND+(ti:medical+OR+ti:clinical+OR+ti:health)"
+    max_results: 3
+ 
+  - name: "多模态医学 AI"
+    # 融合文本、图像、信号的多模态医学模型
+    query: "cat:cs.LG+AND+ti:multimodal+AND+(ti:medical+OR+ti:clinical+OR+ti:ECG+OR+ti:EEG)"
+    max_results: 3
+ 
+  - name: "可解释 AI / XAI 医学"
+    # 医学场景的可解释性，SHAP、Grad-CAM 等
+    query: "cat:cs.LG+AND+(ti:explainable+OR+ti:interpretable+OR+ti:XAI)+AND+(ti:medical+OR+ti:clinical)"
+    max_results: 3
+ 
+  - name: "联邦学习 医学隐私"
+    # 多中心医疗数据隐私保护训练
+    query: "cat:cs.LG+AND+ti:federated+learning+AND+(ti:medical+OR+ti:health+OR+ti:clinical)"
+    max_results: 3
+# ═══════════════════════════════════════════════════════════
+# 四、播客
+# ═══════════════════════════════════════════════════════════
+
+podcasts:
+
+  # ── 医学 / 神经科学 ──────────────────────────────────────
+
+  - name: "Brain Science with Ginger Campbell"   # 顶级神经科学播客，学术深度访谈
+    url: "https://brainsciencepodcast.com/bsp.xml"
+    transcribe: false
+
+  - name: "CardioNerds"                          # 心脏病学专业播客（ACC官方支持）
+    url: "https://feeds.buzzsprout.com/1252790.rss"
+    transcribe: false
+
+  - name: "Huberman Lab"                         # 斯坦福神经科学与脑健康
+    url: "https://feeds.megaphone.fm/hubermanlab"
+    transcribe: false
+
+  # ── AI / 深度学习 ─────────────────────────────────────────
+
+  - name: "TWIML AI Podcast"
+    url: "https://twimlai.com/feed"
+    transcribe: false
+
+  - name: "Machine Learning Street Talk"
+    url: "https://feeds.buzzsprout.com/1511458.rss"
+    transcribe: false
+
+  - name: "Practical AI"
+    url: "https://changelog.com/practicalai/feed"
+    transcribe: false
+
+
+# ═══════════════════════════════════════════════════════════
+# 五、Hacker News 热帖过滤
+# ═══════════════════════════════════════════════════════════
+
+hackernews:
+  enabled: true
+  keywords:
+    # 医学信号处理
+    - "ECG"
+    - "EEG"
+    - "brain"
+    - "cardiac"
+    - "biosignal"
+    - "wearable"
+    - "medical AI"
+    - "health AI"
+    - "BCI"
+    - "neuroscience"
+    # 临床疾病
+    - "Alzheimer"
+    - "Parkinson"
+    - "stroke"
+    - "heart failure"
+    - "epilepsy"
+    # 深度学习通用
+    - "deep learning"
+    - "transformer"
+    - "KAN"
+    - "mamba"
+    - "neural network"
+    - "machine learning"
+    - "foundation model"
+    # 热门新架构
+    - "KAN"
+    - "Mamba"
+    - "state space model"
+    - "YOLO"
+    - "diffusion model"
+    - "multimodal"
+    - "federated learning"
+    - "graph neural"
+  min_score: 70
+  max_items: 4
