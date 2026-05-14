@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/content";
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="搜索" description="搜索所有笔记、论文和项目">
@@ -9,11 +12,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <p>构建后会使用 Pagefind 全文搜索；开发环境会先用本地索引搜索标题、摘要和标签。</p>
   </header>
 
-  <section class="container search-panel">
-    <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css" />
-    <script is:inline type="module" src="/pagefind/pagefind-component-ui.js"></script>
+  <section class="container search-panel" data-base-url={baseUrl}>
+    <link rel="stylesheet" href={withBase("pagefind/pagefind-component-ui.css")} />
+    <script is:inline type="module" src={withBase("pagefind/pagefind-component-ui.js")}></script>
     <div class="pagefind-component-search">
-      <pagefind-config base-url="/"></pagefind-config>
+      <pagefind-config base-url={baseUrl}></pagefind-config>
       <pagefind-input placeholder="输入关键词"></pagefind-input>
       <pagefind-summary></pagefind-summary>
       <pagefind-results max-sub-results="3"></pagefind-results>
@@ -27,6 +30,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   <script is:inline>
     window.addEventListener("DOMContentLoaded", async () => {
+      const panel = document.querySelector(".search-panel");
+      const baseUrl = panel.dataset.baseUrl || "/";
       const local = document.querySelector("[data-local-search]");
       if (customElements.get("pagefind-input")) {
         local.hidden = true;
@@ -39,7 +44,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const input = local.querySelector("input");
       const results = local.querySelector(".search-results");
-      const response = await fetch("/search-index.json");
+      const response = await fetch(`${baseUrl}search-index.json`);
       const rows = await response.json();
 
       function render(query) {
