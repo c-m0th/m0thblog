@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { assetHref, withBase } from "../lib/content";
 
 const {
   title = "Knowledge Blog",
@@ -9,14 +10,16 @@ const {
 
 const fullTitle = title === "Knowledge Blog" ? title : `${title} | Knowledge Blog`;
 const navItems = [
-  { href: "/notes/", label: "笔记" },
-  { href: "/papers/", label: "论文" },
-  { href: "/projects/", label: "项目" },
-  { href: "/tags/", label: "标签" },
-  { href: "/search/", label: "搜索" }
+  { href: withBase("notes/"), label: "笔记" },
+  { href: withBase("papers/"), label: "论文" },
+  { href: withBase("projects/"), label: "项目" },
+  { href: withBase("tags/"), label: "标签" },
+  { href: withBase("search/"), label: "搜索" }
 ];
 
 const pathname = Astro.url.pathname;
+const homeHref = withBase("");
+const pageImage = assetHref(image);
 ---
 
 <!doctype html>
@@ -29,13 +32,13 @@ const pathname = Astro.url.pathname;
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={pageImage} />
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
         <div class="site-header__inner">
-          <a class="brand" href="/" aria-label="Knowledge Blog 首页">
+          <a class="brand" href={homeHref} aria-label="Knowledge Blog 首页">
             <span class="brand__mark">K</span>
             <span>Knowledge Blog</span>
           </a>
