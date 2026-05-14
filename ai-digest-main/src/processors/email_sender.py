@@ -44,6 +44,24 @@ def _as_bool(value: str | None, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _env_text(name: str, default: str = "") -> str:
+    value = os.environ.get(name)
+    if value is None or not value.strip():
+        return default
+    return value.strip()
+
+
+def _env_int(name: str, default: int) -> int:
+    value = _env_text(name)
+    if not value:
+        return default
+    try:
+        return int(value)
+    except ValueError:
+        logger.warning(f"[Email] Ignoring invalid {name}={value!r}; using {default}")
+        return default
+
+
 def parse_recipients(raw: str) -> list[str]:
     """Parse comma, semicolon, or newline separated email addresses."""
     recipients: list[str] = []
@@ -90,7 +108,13 @@ def render_email(items: list[dict]) -> str:
     )
 
 
-def _build_message(email_from: str, recipients: list[str], html_body: str, today: str, count: int) -> MIMEMultipart:
+def _build_message(
+    email_from: str,
+    recipients: list[str],
+    html_body: str,
+    today: str,
+    count: int,
+) -> MIMEMultipart:
     msg = MIMEMultipart("alternative")
     msg["Subject"] = f"每日学术摘要 | {today} | {count} 篇精选"
     msg["From"] = f"AI Digest <{email_from}>"
@@ -113,10 +137,10 @@ def send_email(items: list[dict]) -> bool:
         logger.info("[Email] 没有新内容，跳过发送")
         return False
 
-    email_from = os.environ.get("EMAIL_ADDRESS", "").strip()
-    email_password = os.environ.get("EMAIL_PASSWORD", "").strip()
-    smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com").strip()
-    smtp_port = int(os.environ.get("SMTP_PORT", "465"))
+    email_from = _env_text("EMAIL_ADDRESS")
+    email_password = _env_text("EMAIL_PASSWORD")
+    smtp_host = _env_text("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = _env_int("SMTP_PORT", 465)
     recipients = _get_recipients(email_from)
     send_individually = _as_bool(os.environ.get("EMAIL_SEND_INDIVIDUALLY"), default=False)
 
