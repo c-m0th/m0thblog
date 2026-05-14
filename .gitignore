@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+.DS_Store
+npm-debug.log*
+.astro-*.log
+ai-digest-main/data/
+ai-digest-main/preview.html
