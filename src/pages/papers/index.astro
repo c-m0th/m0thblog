@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CollectionHeader from "../../components/CollectionHeader.astro";
+import EntryCard from "../../components/EntryCard.astro";
+import { allTags, isPublished, sortByDate, tagHref } from "../../lib/content";
+
+const entries = sortByDate((await getCollection("papers")).filter(isPublished));
+const tags = allTags(entries);
+---
+
+<BaseLayout title="论文阅读" description="论文阅读索引">
+  <CollectionHeader collection="papers" count={entries.length} />
+  <section class="container">
+    <div class="tag-list">
+      {tags.map((tag) => <a class="tag tag--blue" href={tagHref(tag)}>{tag}</a>)}
+    </div>
+  </section>
+  <section class="section container">
+    <div class="entry-grid">
+      {entries.map((entry) => <EntryCard entry={entry} collection="papers" />)}
+    </div>
+  </section>
+</BaseLayout>

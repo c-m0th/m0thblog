@@ -1,0 +1,67 @@
+---
+import "../styles/global.css";
+
+const {
+  title = "Knowledge Blog",
+  description = "学习笔记、论文阅读与项目复盘的个人知识库。",
+  image = "/assets/knowledge-hero.png"
+} = Astro.props;
+
+const fullTitle = title === "Knowledge Blog" ? title : `${title} | Knowledge Blog`;
+const navItems = [
+  { href: "/notes/", label: "笔记" },
+  { href: "/papers/", label: "论文" },
+  { href: "/projects/", label: "项目" },
+  { href: "/tags/", label: "标签" },
+  { href: "/search/", label: "搜索" }
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <a class="brand" href="/" aria-label="Knowledge Blog 首页">
+            <span class="brand__mark">K</span>
+            <span>Knowledge Blog</span>
+          </a>
+          <nav class="site-nav" aria-label="主导航">
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.href}
+                  aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </header>
+      <main class="page-main" data-pagefind-body>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <div class="site-footer__inner container">
+          <span>Knowledge Blog</span>
+          <span>Notes, papers, projects, and the trail between them.</span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

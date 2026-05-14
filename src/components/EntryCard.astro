@@ -1,0 +1,34 @@
+---
+import { collectionInfo, entryHref, formatDate } from "../lib/content";
+import type { AnyEntry, CollectionName } from "../lib/content";
+
+interface Props {
+  entry: AnyEntry;
+  collection: CollectionName;
+}
+
+const { entry, collection } = Astro.props;
+const info = collectionInfo[collection];
+const tags = entry.data.tags ?? [];
+const cover = entry.data.cover || undefined;
+---
+
+<article class={`entry-card entry-card--${collection}`}>
+  <a class="entry-card__body" href={entryHref(collection, entry.id)}>
+    {cover && <img class="entry-card__cover" src={cover} alt="" loading="lazy" decoding="async" />}
+    <div class="entry-card__content">
+      <span class="entry-card__kicker">{info.singular} · {formatDate(entry.data.date)}</span>
+      <h3 class="entry-card__title">{entry.data.title}</h3>
+      <p class="entry-card__description">{entry.data.description}</p>
+      {
+        tags.length > 0 && (
+          <span class="entry-card__tags tag-list" aria-label="标签">
+            {tags.slice(0, 4).map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </span>
+        )
+      }
+    </div>
+  </a>
+</article>

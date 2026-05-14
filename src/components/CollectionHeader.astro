@@ -1,0 +1,23 @@
+---
+import { collectionInfo } from "../lib/content";
+import type { CollectionName } from "../lib/content";
+
+interface Props {
+  collection: CollectionName;
+  count: number;
+}
+
+const { collection, count } = Astro.props;
+const info = collectionInfo[collection];
+---
+
+<header class="page-heading container">
+  <p class="eyebrow">{info.singular}</p>
+  <h1>{info.label}</h1>
+  <p>{info.description}</p>
+</header>
+
+<div class="container list-toolbar">
+  <span class="list-toolbar__count">共 {count} 篇</span>
+  <a class="text-link" href="/search/">全站搜索</a>
+</div>

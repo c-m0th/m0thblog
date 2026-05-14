@@ -1,0 +1,33 @@
+---
+title: "用 Astro 和 MDX 搭建个人知识库"
+description: "记录本站的技术选择、目录结构和后续扩展方向。"
+date: "2026-05-14"
+cover: "/assets/knowledge-hero.png"
+tags: ["Astro", "MDX", "知识管理"]
+area: "Web"
+status: "evergreen"
+draft: false
+---
+
+## 背景
+
+个人知识库的核心不是发布速度，而是长期可维护。把内容保存在 Markdown/MDX 文件里，可以同时获得低迁移成本、版本管理和静态站点的性能。
+
+## 当前结构
+
+本站把内容拆成三类 collection：
+
+```txt
+src/content/notes/
+src/content/papers/
+src/content/projects/
+```
+
+每一篇内容都带有标题、摘要、日期、标签和草稿状态。后续可以继续增加专题、阅读状态、项目阶段等字段。
+
+## 下一步
+
+- 给每个专题增加聚合页
+- 为论文条目增加 BibTeX、DOI 和 PDF 附件
+- 为项目条目增加时间线和里程碑
+- 增加 RSS、站点地图和暗色模式

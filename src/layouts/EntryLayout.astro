@@ -1,0 +1,88 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import { collectionInfo, formatDate, tagHref } from "../lib/content";
+import type { AnyEntry, CollectionName } from "../lib/content";
+
+interface Props {
+  entry: AnyEntry;
+  collection: CollectionName;
+}
+
+const { entry, collection } = Astro.props;
+const info = collectionInfo[collection];
+const { Content, headings } = await render(entry);
+const tags = entry.data.tags ?? [];
+const cover = entry.data.cover || undefined;
+
+const details = [
+  `${info.singular} · ${formatDate(entry.data.date)}`,
+  entry.data.updated ? `更新于 ${formatDate(entry.data.updated)}` : null,
+  collection === "papers" && "authors" in entry.data && entry.data.authors.length
+    ? entry.data.authors.join(", ")
+    : null,
+  collection === "papers" && "venue" in entry.data && entry.data.venue ? entry.data.venue : null,
+  collection === "projects" && "role" in entry.data && entry.data.role ? entry.data.role : null
+].filter(Boolean);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} image={cover}>
+  <article class="article-shell container">
+    <div>
+      <header class="article-header">
+        <p class="eyebrow">{info.label}</p>
+        <h1>{entry.data.title}</h1>
+        <p>{entry.data.description}</p>
+        <div class="article-meta-list">
+          {details.map((detail) => <span>{detail}</span>)}
+        </div>
+        {
+          tags.length > 0 && (
+            <div class="tag-list">
+              {tags.map((tag) => (
+                <a class="tag" href={tagHref(tag)}>{tag}</a>
+              ))}
+            </div>
+          )
+        }
+        {cover && <img class="article-cover" src={cover} alt="" loading="eager" decoding="async" />}
+        {
+          collection === "papers" && "pdf" in entry.data && entry.data.pdf && (
+            <div class="detail-links">
+              <a class="button button--ghost" href={entry.data.pdf}>查看 PDF</a>
+            </div>
+          )
+        }
+        {
+          collection === "projects" && "repo" in entry.data && entry.data.repo && (
+            <div class="detail-links">
+              <a class="button button--ghost" href={entry.data.repo}>代码仓库</a>
+              {"demo" in entry.data && entry.data.demo && (
+                <a class="button button--ghost" href={entry.data.demo}>在线演示</a>
+              )}
+            </div>
+          )
+        }
+      </header>
+      <div class="article-content">
+        <Content />
+      </div>
+    </div>
+    <aside class="article-sidebar" aria-label="文章目录">
+      <h2>目录</h2>
+      {
+        headings.length > 0 ? (
+          <ol>
+            {headings.filter((heading) => heading.depth <= 3).map((heading) => (
+              <li>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>暂无小节</p>
+        )
+      }
+    </aside>
+  </article>
+</BaseLayout>

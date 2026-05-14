@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { allTags, isPublished, tagHref } from "../../lib/content";
+
+const allEntries = [
+  ...(await getCollection("notes")).filter(isPublished),
+  ...(await getCollection("papers")).filter(isPublished),
+  ...(await getCollection("projects")).filter(isPublished)
+];
+const tags = allTags(allEntries);
+---
+
+<BaseLayout title="标签" description="按标签浏览所有内容">
+  <header class="page-heading container">
+    <p class="eyebrow">Tags</p>
+    <h1>标签</h1>
+    <p>用主题、领域、方法和状态把内容串起来。</p>
+  </header>
+  <section class="section container">
+    <div class="tag-list">
+      {tags.map((tag) => <a class="tag" href={tagHref(tag)}>{tag}</a>)}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EntryCard from "../../components/EntryCard.astro";
+import { collectionNames, isPublished, sortByDate } from "../../lib/content";
+import type { CollectionName } from "../../lib/content";
+
+export async function getStaticPaths() {
+  const tagged = await Promise.all(
+    collectionNames.map(async (collection) => {
+      const entries = (await getCollection(collection)).filter(isPublished);
+      return entries.map((entry) => ({ entry, collection }));
+    })
+  );
+  const tags = Array.from(
+    new Set(tagged.flat().flatMap(({ entry }) => entry.data.tags ?? []))
+  );
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag }
+  }));
+}
+
+const { tag } = Astro.props;
+const grouped = await Promise.all(
+  collectionNames.map(async (collection) => {
+    const entries = (await getCollection(collection)).filter(
+      (entry) => isPublished(entry) && (entry.data.tags ?? []).includes(tag)
+    );
+    return entries.map((entry) => ({ entry, collection }));
+  })
+);
+
+const entries = sortByDate(grouped.flat().map(({ entry }) => entry)).map((entry) => {
+  const collection = grouped.flat().find((item) => item.entry.id === entry.id)?.collection as CollectionName;
+  return { entry, collection };
+});
+---
+
+<BaseLayout title={`标签：${tag}`} description={`标签 ${tag} 下的内容`}>
+  <header class="page-heading container">
+    <p class="eyebrow">Tag</p>
+    <h1>{tag}</h1>
+    <p>共 {entries.length} 条内容。</p>
+  </header>
+  <section class="section container">
+    <div class="entry-grid">
+      {entries.map(({ entry, collection }) => <EntryCard entry={entry} collection={collection} />)}
+    </div>
+  </section>
+</BaseLayout>

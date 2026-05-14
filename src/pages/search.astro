@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="搜索" description="搜索所有笔记、论文和项目">
+  <header class="page-heading container">
+    <p class="eyebrow">Search</p>
+    <h1>搜索</h1>
+    <p>构建后会使用 Pagefind 全文搜索；开发环境会先用本地索引搜索标题、摘要和标签。</p>
+  </header>
+
+  <section class="container search-panel">
+    <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css" />
+    <script is:inline type="module" src="/pagefind/pagefind-component-ui.js"></script>
+    <div class="pagefind-component-search">
+      <pagefind-config base-url="/"></pagefind-config>
+      <pagefind-input placeholder="输入关键词"></pagefind-input>
+      <pagefind-summary></pagefind-summary>
+      <pagefind-results max-sub-results="3"></pagefind-results>
+    </div>
+
+    <div class="search-box" data-local-search>
+      <input type="search" placeholder="输入关键词" aria-label="搜索关键词" />
+      <div class="search-results" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", async () => {
+      const local = document.querySelector("[data-local-search]");
+      if (customElements.get("pagefind-input")) {
+        local.hidden = true;
+        return;
+      }
+
+      customElements.whenDefined("pagefind-input").then(() => {
+        local.hidden = true;
+      });
+
+      const input = local.querySelector("input");
+      const results = local.querySelector(".search-results");
+      const response = await fetch("/search-index.json");
+      const rows = await response.json();
+
+      function render(query) {
+        const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+        const matches = terms.length
+          ? rows.filter((row) => {
+              const haystack = [
+                row.title,
+                row.description,
+                row.collectionLabel,
+                ...row.tags
+              ].join(" ").toLowerCase();
+              return terms.every((term) => haystack.includes(term));
+            })
+          : rows.slice(0, 8);
+
+        results.innerHTML = matches
+          .slice(0, 12)
+          .map((row) => `
+            <article class="search-result">
+              <a href="${row.url}">${row.title}</a>
+              <p>${row.collectionLabel} · ${row.description}</p>
+            </article>
+          `)
+          .join("");
+      }
+
+      input.addEventListener("input", () => render(input.value));
+      render("");
+    });
+  </script>
+</BaseLayout>
