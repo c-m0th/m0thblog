@@ -6,6 +6,22 @@ export type AnyEntry =
   | CollectionEntry<"papers">
   | CollectionEntry<"projects">;
 
+export function withBase(path: string) {
+  const base = import.meta.env.BASE_URL;
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+  return `${base}${cleanPath}`;
+}
+
+export function assetHref(path: string | null | undefined) {
+  if (!path) {
+    return undefined;
+  }
+  if (/^(https?:)?\/\//.test(path) || path.startsWith("data:")) {
+    return path;
+  }
+  return withBase(path);
+}
+
 export const collectionInfo: Record<
   CollectionName,
   { label: string; singular: string; href: string; description: string }
@@ -13,19 +29,19 @@ export const collectionInfo: Record<
   notes: {
     label: "学习笔记",
     singular: "笔记",
-    href: "/notes/",
+    href: withBase("notes/"),
     description: "把学过的知识拆成可复用、可回看、可链接的小块。"
   },
   papers: {
     label: "论文阅读",
     singular: "论文",
-    href: "/papers/",
+    href: withBase("papers/"),
     description: "记录论文的问题意识、方法、结论、局限和可延伸方向。"
   },
   projects: {
     label: "项目复盘",
     singular: "项目",
-    href: "/projects/",
+    href: withBase("projects/"),
     description: "沉淀自己做过的项目、技术选择、踩坑和下一步计划。"
   }
 };
@@ -41,7 +57,7 @@ export function sortByDate<T extends AnyEntry>(entries: T[]) {
 }
 
 export function entryHref(collection: CollectionName, id: string) {
-  return `/${collection}/${id}/`;
+  return withBase(`${collection}/${id}/`);
 }
 
 export function formatDate(date: Date) {
@@ -59,5 +75,5 @@ export function allTags(entries: AnyEntry[]) {
 }
 
 export function tagHref(tag: string) {
-  return `/tags/${encodeURIComponent(tag)}/`;
+  return withBase(`tags/${encodeURIComponent(tag)}/`);
 }
